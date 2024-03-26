@@ -47,6 +47,6 @@ public class Product {
     private Date lastUpdated;
 
     @ManyToOne
-    @Column(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
 }

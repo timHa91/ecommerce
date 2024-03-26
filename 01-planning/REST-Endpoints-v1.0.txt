@@ -1,0 +1,5 @@
+POST /products Create a new product
+GET /products Read a list of products
+GET /products/{id} Read a single product
+PUT /products/{id} Update an existing product
+DELETE /products/{id} Delete an existing product

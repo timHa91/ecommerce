@@ -1,33 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { Product } from '../common/product';
-import { ProductCategory } from '../common/productCategory';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Product } from '../models/product';
 import { environment } from '../../environments/environment';
-
-interface GetResponseProducts {
-  _embedded: {
-    products: Product[];
-  }
-}
+import { GetResponseProducts } from '../interfaces/get-response-products';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-
   private baseUrl = environment.baseUrlProducts;
 
-  constructor(private http: HttpClient) { }
+  productListHasChanged$ = new BehaviorSubject<Observable<Product[]> | null>(
+    null
+  );
 
-  getProductListFromBackend(categoryId: number): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
-    return this.http.get<GetResponseProducts>(searchUrl)
-          .pipe(
-            map(response => {
-              console.log(response);
-              
-              return response._embedded.products}));
+  constructor(private http: HttpClient) {}
+
+  getAllProducts() {
+    const requestUrl = this.baseUrl + '?size=100';
+    this.productListHasChanged$.next(
+      this.http
+        .get<GetResponseProducts>(requestUrl)
+        .pipe(map((response) => response._embedded.products))
+    );
   }
 
+  getProductByCategory(categoryId: number) {
+    const requestUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+    this.productListHasChanged$.next(
+      this.http
+        .get<GetResponseProducts>(requestUrl)
+        .pipe(map((response) => response._embedded.products))
+    );
+  }
+
+  findProductsByName(name: string) {
+    const requestUrl = `${this.baseUrl}/search/findByNameContaining?name=${name}`;
+    this.productListHasChanged$.next(
+      this.http
+        .get<GetResponseProducts>(requestUrl)
+        .pipe(map((response) => response._embedded.products))
+    );
+  }
 }

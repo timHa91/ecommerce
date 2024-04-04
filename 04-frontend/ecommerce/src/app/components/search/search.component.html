@@ -1,0 +1,13 @@
+<form
+  class="form-header"
+  [formGroup]="searchForm"
+  (ngSubmit)="onSearchProducts()"
+>
+  <input
+    class="au-input au-input-xl"
+    type="text"
+    placeholder="Search for products ..."
+    formControlName="searchName"
+  />
+  <button class="au-btn-submit" type="submit">Search</button>
+</form>

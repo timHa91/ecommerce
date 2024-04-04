@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Product } from '../common/product';
+import { ProductCategory } from '../common/productCategory';
+import { environment } from '../../environments/environment';
 
-interface GetResponse {
+interface GetResponseProducts {
   _embedded: {
     products: Product[];
   }
@@ -14,12 +16,18 @@ interface GetResponse {
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products?size=100'
+  private baseUrl = environment.baseUrlProducts;
 
   constructor(private http: HttpClient) { }
 
-  getProductListFromBackend(): Observable<Product[]> {
-    return this.http.get<GetResponse>(this.baseUrl)
-    .pipe(map(response => response._embedded.products));
+  getProductListFromBackend(categoryId: number): Observable<Product[]> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+    return this.http.get<GetResponseProducts>(searchUrl)
+          .pipe(
+            map(response => {
+              console.log(response);
+              
+              return response._embedded.products}));
   }
+
 }

@@ -5,12 +5,13 @@
         <!-- loop over the collection of products -->
         <div *ngFor="let product of products$ | async" class="col-md-3">
           <div class="product-box">
-            <img src="{{ product.imageUrl }}" class="img-responsive" />
-            <h1>{{ product.name }}</h1>
+            <a routerLink="/products/{{ product.id }}" class="product-link">
+              <img src="{{ product.imageUrl }}" class="img-responsive" />
+              <h1>{{ product.name }}</h1>
+            </a>
+
             <div class="price">{{ product.unitPrice | currency : "EUR" }}</div>
-            <a href="#" class="primary-btn" style="text-decoration: none"
-              >Add to cart</a
-            >
+            <a class="primary-btn" style="text-decoration: none">Add to cart</a>
           </div>
         </div>
         <!-- if products empty then display a message-->

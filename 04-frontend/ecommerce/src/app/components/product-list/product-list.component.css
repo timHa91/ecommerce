@@ -1,0 +1,9 @@
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.product-link:hover {
+  text-decoration: underline;
+}

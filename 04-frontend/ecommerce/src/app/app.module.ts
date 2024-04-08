@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProductDetailsComponent } from './components/product-list/product-details/product-details.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 @NgModule({
   declarations: [

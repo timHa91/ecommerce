@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProductService } from '../../services/product.service';
-import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +10,7 @@ import { Router } from '@angular/router';
 export class SearchComponent implements OnInit {
   searchForm!: FormGroup;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({

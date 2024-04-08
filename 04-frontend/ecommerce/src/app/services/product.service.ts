@@ -26,6 +26,11 @@ export class ProductService {
     );
   }
 
+  getProductById(id: number): Observable<Product> {
+    const requestUrl = `${this.baseUrl}/${id}`;
+    return this.http.get<Product>(requestUrl);
+  }
+
   getProductByCategory(categoryId: number) {
     const requestUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
     this.productListHasChanged$.next(

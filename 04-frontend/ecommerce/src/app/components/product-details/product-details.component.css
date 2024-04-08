@@ -1,0 +1,33 @@
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.detail-img img {
+  flex-grow: 1;
+  flex-shrink: 1;
+  object-fit: contain;
+  max-width: 30%;
+}
+
+.description {
+  flex-grow: 2;
+  flex-shrink: 1;
+  margin-bottom: 60px;
+}
+
+.detail-container a {
+  text-decoration: none;
+}
+
+.detail-container a:hover {
+  text-decoration: underline;
+}
+
+.detail-button {
+  flex-grow: 0; /* Verhindert, dass der Button wächst */
+  flex-shrink: 1; /* Erlaubt dem Button, schrumpfen zu können, wenn der Platz knapp ist */
+  flex-basis: auto; /* Setzt die Basisgröße des Buttons auf die Größe des Inhalts */
+  max-width: 8%; /* Begrenzt die maximale Breite des Buttons auf 100px */
+}

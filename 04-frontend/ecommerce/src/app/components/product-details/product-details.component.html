@@ -1,0 +1,20 @@
+<div
+  class="detail-container section-content-p30"
+  style="margin-top: 100px"
+  *ngIf="product$ | async as product"
+>
+  <div class="detail-img">
+    <img src="{{ product.imageUrl }}" />
+  </div>
+  <h1>{{ product?.name }}</h1>
+  <p class="price">{{ product.unitPrice | currency : "EUR" }}</p>
+  <a class="primary-btn detail-button" style="text-decoration: none"
+    >Add to cart</a
+  >
+  <hr />
+  <div class="description">
+    <h2>Description</h2>
+    <p>{{ product.description }}</p>
+  </div>
+  <a routerLink="/products">Back to Product List</a>
+</div>

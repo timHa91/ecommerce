@@ -7,3 +7,8 @@
 .product-link:hover {
   text-decoration: underline;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}

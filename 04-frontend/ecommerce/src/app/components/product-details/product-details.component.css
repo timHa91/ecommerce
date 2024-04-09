@@ -26,8 +26,8 @@
 }
 
 .detail-button {
-  flex-grow: 0; /* Verhindert, dass der Button wächst */
-  flex-shrink: 1; /* Erlaubt dem Button, schrumpfen zu können, wenn der Platz knapp ist */
-  flex-basis: auto; /* Setzt die Basisgröße des Buttons auf die Größe des Inhalts */
-  max-width: 8%; /* Begrenzt die maximale Breite des Buttons auf 100px */
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  max-width: 8%;
 }

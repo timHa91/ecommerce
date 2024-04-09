@@ -1,29 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
 import { Product } from '../models/product';
 import { environment } from '../../environments/environment';
 import { GetResponseProducts } from '../interfaces/get-response-products';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private baseUrl = environment.baseUrlProducts;
+  pagination$ = new Subject<Page>();
 
-  productListHasChanged$ = new BehaviorSubject<Observable<Product[]> | null>(
-    null
-  );
+  productListHasChanged$ = new BehaviorSubject<Product[]>([]);
 
   constructor(private http: HttpClient) {}
 
-  getAllProducts() {
-    const requestUrl = this.baseUrl + '?size=100';
-    this.productListHasChanged$.next(
-      this.http
-        .get<GetResponseProducts>(requestUrl)
-        .pipe(map((response) => response._embedded.products))
-    );
+  getAllProducts(page?: number, pageSize?: number) {
+    let requestUrl = this.baseUrl;
+    // Check Pagination
+    if (page !== undefined && pageSize !== undefined) {
+      requestUrl += `?page=${page}&size=${pageSize}`;
+    }
+
+    this.http
+      .get<GetResponseProducts>(requestUrl)
+      .pipe(
+        tap((response) => {
+          this.productListHasChanged$.next(response._embedded.products);
+          this.pagination$.next(response.page);
+        })
+      )
+      .subscribe();
   }
 
   getProductById(id: number): Observable<Product> {
@@ -31,21 +40,39 @@ export class ProductService {
     return this.http.get<Product>(requestUrl);
   }
 
-  getProductByCategory(categoryId: number) {
-    const requestUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
-    this.productListHasChanged$.next(
-      this.http
-        .get<GetResponseProducts>(requestUrl)
-        .pipe(map((response) => response._embedded.products))
-    );
+  getProductByCategory(categoryId: number, page?: number, pageSize?: number) {
+    let requestUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+
+    // Check Pagination
+    if (page !== undefined && pageSize !== undefined) {
+      requestUrl += `&page=${page}&size=${pageSize}`;
+    }
+
+    this.http
+      .get<GetResponseProducts>(requestUrl)
+      .pipe(
+        tap((response) => {
+          this.productListHasChanged$.next(response._embedded.products);
+          this.pagination$.next(response.page);
+        })
+      )
+      .subscribe();
   }
 
-  findProductsByName(name: string) {
-    const requestUrl = `${this.baseUrl}/search/findByNameContaining?name=${name}`;
-    this.productListHasChanged$.next(
-      this.http
-        .get<GetResponseProducts>(requestUrl)
-        .pipe(map((response) => response._embedded.products))
-    );
+  findProductsByName(name: string, page?: number, pageSize?: number) {
+    let requestUrl = `${this.baseUrl}/search/findByNameContaining?name=${name}`;
+    // Check Pagination
+    if (page !== undefined && pageSize !== undefined) {
+      requestUrl += `&page=${page}&size=${pageSize}`;
+    }
+    this.http
+      .get<GetResponseProducts>(requestUrl)
+      .pipe(
+        tap((response) => {
+          this.productListHasChanged$.next(response._embedded.products);
+          this.pagination$.next(response.page);
+        })
+      )
+      .subscribe();
   }
 }

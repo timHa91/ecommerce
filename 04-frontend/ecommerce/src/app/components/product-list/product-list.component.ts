@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   productListHasChangedSubscription: Subscription | null = null;
   paginationSubscription: Subscription | null = null;
   page: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalElements: number = 0;
   searchType: 'category' | 'search' | 'all' = 'all';
 
@@ -97,7 +97,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   private resetPagination() {
     this.page = 1;
-    this.pageSize = 10;
+    this.pageSize = 5;
   }
 
   handlePageChange() {
@@ -108,6 +108,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     } else if (this.searchType === 'all') {
       this.handleAllProducts();
     }
+  }
+
+  changePageSize(value: any) {
+    this.pageSize = value;
+    this.handlePageChange();
   }
 
   ngOnDestroy(): void {

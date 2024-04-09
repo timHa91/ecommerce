@@ -22,13 +22,24 @@
         >
           No products found.
         </div>
-        <div class="pagination">
-          <ngb-pagination
-            [collectionSize]="totalElements"
-            [(page)]="page"
-            [pageSize]="pageSize"
-            (pageChange)="handlePageChange()"
-          />
+        <div class="pagination row d-flex align-items-end">
+          <div class="col-md-9" style="padding-left: 30%">
+            <ngb-pagination
+              [collectionSize]="totalElements"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              (pageChange)="handlePageChange()"
+            />
+          </div>
+          <div class="page-size col-md-3 mt-2">
+            <span class="mr-2">Page Size</span>
+            <select #pageSelect (change)="changePageSize(pageSelect.value)">
+              <option selected="true">5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
